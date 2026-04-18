@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 from sklearn.tree import DecisionTreeClassifier
 
 # ---------------- PAGE CONFIG ----------------
@@ -22,23 +22,11 @@ model.fit(X, y)
 # ---------------- DATA VISUALIZATION ----------------
 st.subheader("📊 Dataset Insights")
 
-col_graph1, col_graph2 = st.columns(2)
+fig = px.scatter(df, x="Density", y="Risk", title="Density vs Risk")
+st.plotly_chart(fig)
 
-# Scatter Plot
-with col_graph1:
-    fig, ax = plt.subplots()
-    ax.scatter(df['Density'], df['Risk'])
-    ax.set_xlabel("Density")
-    ax.set_ylabel("Risk")
-    ax.set_title("Density vs Risk")
-    st.pyplot(fig)
-
-# Histogram
-with col_graph2:
-    fig2, ax2 = plt.subplots()
-    df['Density'].hist(ax=ax2)
-    ax2.set_title("Density Distribution")
-    st.pyplot(fig2)
+fig2 = px.histogram(df, x="Density", title="Density Distribution")
+st.plotly_chart(fig2)
 
 # ---------------- INPUT SECTION ----------------
 st.subheader("🧾 Enter Event Details")
